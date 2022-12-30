@@ -13,19 +13,26 @@ Config { font = "xft:Terminus (TTF):pixelsize=18:antialias=true:hinting=true"
        , iconRoot = "."
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run Cpu ["-L","3","-H","50",
-                               "--normal","green","--high","red"] 10
-                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+       , commands = [ Run Cpu ["-L","5","-H","50","--low","green","--normal","#687af9","--high","red"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%",
+						"--Low", "20",
+						"--High", "90",
+						"--low", "green",
+						"--normal", "#687af9",
+						"--high", "red"] 10
                     , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
 					, Run StdinReader
 					, Run Brightness ["-t", ""] 60
 					, Run Battery [
-					"-t", "<acstatus>: <left>%",
-					"--",
-					"-O", "AC",
-					"-o", "Bat",
-					"-h", "green",
-					"-l", "red"
+						"-t", "<acstatus>: <left>%",
+						"-L", "10",
+						"-H", "80",
+						"--low", "red",
+						"--normal", "#687af9",
+						"--high", "green",
+						"--",
+						"-O", "<fc=gray>AC</fc>",
+						"-o", "<fc=gray>Bat</fc>"
 					] 10
 					, Run Com "/bin/bash" ["-c", "~/.xmonad/get-volume.sh"] "myvolume" 1
 					, Run Com "/bin/bash" ["-c", "echo `light | grep -oE '^.[0-9]{0,3}'`%"] "mybright" 1
@@ -33,5 +40,5 @@ Config { font = "xft:Terminus (TTF):pixelsize=18:antialias=true:hinting=true"
        , sepChar = "%"
        , alignSep = "}{"
        , template = "%StdinReader%}\
-	   				\{ %battery% | %myvolume% | Lum: %mybright% | %cpu% | %memory% | <fc=#ee9a00>%date%</fc>"
+	   				\{ <fc=#f96868>%myvolume%</fc> | <fc=#c788ea>Lum: %mybright%</fc> | %cpu% | %memory% | %battery% | <fc=#ee9a00>%date%</fc>"
        }
